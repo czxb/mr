@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- This is a Stata 15.1 generated SVG file (http://www.stata.com) -->
+
+<svg version="1.1" width="2400px" height="1800px" viewBox="0 0 4320 3240" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<desc>Stata Graph - Graph</desc>
+	<rect x="0" y="0" width="4320" height="3240" style="fill:#FFFFFF;stroke:none"/>
+	<rect x="0.00" y="0.00" width="4320.00" height="3240.00" style="fill:#FFFFFF"/>
+	<rect x="2.88" y="2.88" width="4314.24" height="3234.24" style="fill:none;stroke:#FFFFFF;stroke-width:5.76"/>
+	<line x1="951.48" y1="1544.29" x2="3368.52" y2="1544.29" style="stroke:#000000;stroke-width:8.64"/>
+	<line x1="3368.52" y1="1544.29" x2="3329.91" y2="1567.98" stroke-linecap="round" style="stroke:#000000;stroke-width:8.64"/>
+	<line x1="3368.52" y1="1544.29" x2="3329.91" y2="1520.60" stroke-linecap="round" style="stroke:#000000;stroke-width:8.64"/>
+	<line x1="951.48" y1="2903.90" x2="951.48" y2="184.68" style="stroke:#000000;stroke-width:8.64"/>
+	<line x1="951.48" y1="184.68" x2="972.54" y2="228.12" stroke-linecap="round" style="stroke:#000000;stroke-width:8.64"/>
+	<line x1="951.48" y1="184.68" x2="930.42" y2="228.12" stroke-linecap="round" style="stroke:#000000;stroke-width:8.64"/>
+	<line x1="2160.00" y1="1136.35" x2="3217.45" y2="1136.35" style="stroke:#000000;stroke-width:8.64"/>
+	<line x1="2160.00" y1="1136.35" x2="951.48" y2="2292.13" style="stroke:#000000;stroke-width:8.64"/>
+	<line x1="2160.00" y1="1544.29" x2="2160.00" y2="1479.44" style="stroke:#000000;stroke-width:8.64"/>
+	<line x1="2160.00" y1="1447.09" x2="2160.00" y2="1382.24" style="stroke:#000000;stroke-width:8.64"/>
+	<line x1="2160.00" y1="1349.89" x2="2160.00" y2="1285.03" style="stroke:#000000;stroke-width:8.64"/>
+	<line x1="2160.00" y1="1252.68" x2="2160.00" y2="1187.83" style="stroke:#000000;stroke-width:8.64"/>
+	<line x1="2160.00" y1="1155.48" x2="2160.00" y2="1136.35" style="stroke:#000000;stroke-width:8.64"/>
+	<line x1="951.48" y1="1136.35" x2="1009.12" y2="1136.35" style="stroke:#000000;stroke-width:8.64"/>
+	<line x1="1037.88" y1="1136.35" x2="1095.53" y2="1136.35" style="stroke:#000000;stroke-width:8.64"/>
+	<line x1="1124.28" y1="1136.35" x2="1181.92" y2="1136.35" style="stroke:#000000;stroke-width:8.64"/>
+	<line x1="1210.68" y1="1136.35" x2="1268.33" y2="1136.35" style="stroke:#000000;stroke-width:8.64"/>
+	<line x1="1297.08" y1="1136.35" x2="1354.72" y2="1136.35" style="stroke:#000000;stroke-width:8.64"/>
+	<line x1="1383.48" y1="1136.35" x2="1441.12" y2="1136.35" style="stroke:#000000;stroke-width:8.64"/>
+	<line x1="1469.88" y1="1136.35" x2="1527.53" y2="1136.35" style="stroke:#000000;stroke-width:8.64"/>
+	<line x1="1556.28" y1="1136.35" x2="1613.92" y2="1136.35" style="stroke:#000000;stroke-width:8.64"/>
+	<line x1="1642.68" y1="1136.35" x2="1700.33" y2="1136.35" style="stroke:#000000;stroke-width:8.64"/>
+	<line x1="1729.08" y1="1136.35" x2="1786.72" y2="1136.35" style="stroke:#000000;stroke-width:8.64"/>
+	<line x1="1815.48" y1="1136.35" x2="1873.12" y2="1136.35" style="stroke:#000000;stroke-width:8.64"/>
+	<line x1="1901.88" y1="1136.35" x2="1959.53" y2="1136.35" style="stroke:#000000;stroke-width:8.64"/>
+	<line x1="1988.28" y1="1136.35" x2="2045.92" y2="1136.35" style="stroke:#000000;stroke-width:8.64"/>
+	<line x1="2074.68" y1="1136.35" x2="2132.32" y2="1136.35" style="stroke:#000000;stroke-width:8.64"/>
+	<text x="770.17" y="258.13" style="font-family:'Helvetica';font-size:100.03px;fill:#000000" text-anchor="middle">Payoff</text>
+	<text x="875.88" y="1583.72" style="font-family:'Helvetica';font-size:100.03px;fill:#000000" text-anchor="middle">0</text>
+	<text x="860.76" y="1175.77" style="font-family:'Helvetica';font-size:100.03px;fill:#000000" text-anchor="middle">M</text>
+	<text x="2160.00" y="1651.76" style="font-family:'Helvetica';font-size:100.03px;fill:#000000" text-anchor="middle">K</text>
+	<text x="1706.81" y="1515.83" style="font-family:'Helvetica';font-size:100.03px;fill:#000000" text-anchor="middle">A</text>
+	<text x="3443.99" y="1651.76" style="font-family:'Helvetica';font-size:100.03px;fill:#000000" text-anchor="middle">Price</text>
+	<text x="2160.00" y="3073.27" style="fill:#000000" text-anchor="middle">
+		<tspan style="font-family:'Helvetica';font-weight:bold;font-size:100.03px"> 图4:</tspan>
+		<tspan style="font-family:'Helvetica';font-size:100.03px"> 卖出看跌期权</tspan>
+	</text>
+</svg>
