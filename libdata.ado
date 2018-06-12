@@ -7,10 +7,11 @@
 *! 				use(1)表示最终会打开图书馆数据文件
 *! 				use(2)表示最终会打开借阅列表
 *! 				use(3)表示最终会打开推荐列表
-*! 		save(num+num+num)：该命令用于选择保存的数据文件
-*! 				111：表示三个文件都保存
-*! 				100：只保存第一个文件
-*! 				101：不保存第二个文件
+*! 				use(0)表示最终什么都不会打开
+*! 		save(num num num)：该命令用于选择保存的数据文件
+*! 				1 1 1：表示三个文件都保存
+*! 				1 0 0：只保存第一个文件
+*! 				1 0 1：不保存第二个文件
 *! 				······
 *! 返回值：ret list
 *! 			返回值中有基本数据的局部宏
@@ -24,7 +25,7 @@ version 14.0
 	tokenize `anything'
 	local name = "`1'"
 	local id = "`2'"
-	if "`save'" == "" local save = "111"
+	if "`save'" == "" local save = "1 1 1"
 	tokenize `save'
 	local save1 = "`1'"
 	local save2 = "`2'"
@@ -237,14 +238,16 @@ version 14.0
 			ret local 借书数量全院排名 = `=score[13]'
 			ret local 最喜欢借书的时间 = "`=score[14]'"
 		}
-		if "`use'" == "1" {
-			use "`name'的图书馆数据", clear
-		}
-		if "`use'" == "2" {
-			use "`name'的借阅列表", clear
-		}
-		if "`use'" == "3" {
-			use "`name'的推荐列表", clear
+		if "`use'" != "0"{
+			if "`use'" == "1" {
+				use "`name'的图书馆数据", clear
+			}
+			if "`use'" == "2" {
+				use "`name'的借阅列表", clear
+			}
+			if "`use'" == "3" {
+				use "`name'的推荐列表", clear
+			}
 		}
 		di in green "第一次进馆时间是" in red "`=score[1]'"
 		di in green "总进馆" in red "`=score[2]'次"
@@ -260,7 +263,6 @@ version 14.0
 		di in green "借阅kindle的次数" in red "`=score[12]'"
 		di in green "借书数量全院排名" in red "`=score[13]'"
 		di in green "最喜欢借书的时间" in red "`=score[14]'"
-		qui cap erase temp.txt
 	}
 end 
 
