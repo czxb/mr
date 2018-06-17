@@ -41,6 +41,7 @@ prog def cjdquery
 			display in green "年度：" in red "`=年度[`i']'"
 			display in green "姓名：" in red "`=姓名[`i']'"
 			display in green "学号：" in red "`=学号[`i']'"
+			display in green "绩点：" in red "`=绩点[`i']'"
 			display in green "班级排名：" in red "`=班级排名[`i']'"
 			display in green "专业排名：" in red "`=专业排名[`i']'"
 			display in yellow "------------------------------"
@@ -48,6 +49,5 @@ prog def cjdquery
 	}
 	save `name'_成绩单, replace
 end
-
 
 
