@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+   </head>
+   <body style="height: 100%; margin: 0">
+       <div id="container" style="height: 100%"></div>
+       <script type="text/javascript" src="./js/echarts.min.js"></script>
+           <script type="text/javascript" src="./js/dark.js"></script>
+           <script type="text/javascript" src="./js/vintage.js"></script>
+           <script type="text/javascript" src="./js/macarons.js"></script>
+           <script type="text/javascript" src="./js/infographic.js"></script>
+           <script type="text/javascript" src="./js/shine.js"></script>
+           <script type="text/javascript" src="./js/roma.js"></script>
+<script type="text/javascript"> 
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom, 'vintage');
+var app = {};
+option = null;
+var upColor = '#ec0000';
+var upBorderColor = '#8A0000';
+var downColor = '#00da3c';
+var downBorderColor = '#008F28';
+var data0 = splitData([
+['2018/6/1', 24.68, 23.2, 22.61, 24.9],
+['2018/6/4', 23.41, 23.5, 22.9, 23.79],
+['2018/6/5', 23.77, 24.4, 23.61, 24.68],
+['2018/6/6', 24.14, 25.37, 24.14, 25.55],
+['2018/6/7', 25.3, 24.73, 24.28, 25.3],
+['2018/6/8', 24.35, 23.96, 23.59, 24.55],
+['2018/6/11', 23.71, 23.93, 23.15, 24.18],
+['2018/6/12', 24.7, 24.73, 23.82, 24.85],
+['2018/6/13', 24.7, 23.77, 23.66, 24.7],
+['2018/6/14', 23.75, 23.5, 23.23, 24.07],
+['2018/6/15', 23.7, 22.95, 22.52, 23.78],
+['2018/6/19', 22.41, 22.04, 21.5, 23.6],
+['2018/6/20', 22.23, 23.1, 22.02, 23.32],
+['2018/6/21', 23.1, 22.8, 22.55, 23.38],
+['2018/6/22', 22.59, 22.39, 22.05, 22.7],
+['2018/6/25', 22.47, 20.78, 20.7, 22.48],
+['2018/6/26', 20.3, 21.22, 20.2, 21.44],
+['2018/6/27', 21.37, 21.4, 21.3, 21.9],
+['2018/6/28', 21.6, 21.1, 21, 21.74],
+['2018/6/29', 21.3, 22.29, 21, 22.42],
+['2018/7/2', 22.5, 23.14, 22.42, 23.76],
+['2018/7/3', 23.03, 22.73, 22.15, 23.19],
+['2018/7/4', 22.5, 21.88, 21.68, 22.7],
+['2018/7/5', 21.78, 21.22, 21.12, 22.35],
+['2018/7/6', 21.38, 21.8, 21.01, 22.3],
+['2018/7/9', 21.9, 23.5, 21.72, 23.69],
+['2018/7/10', 23.5, 23.36, 23.13, 23.88],
+['2018/7/11', 22.79, 22.97, 22.22, 23.14],
+['2018/7/12', 23.23, 24.11, 22.82, 24.5],
+['2018/7/13', 23.89, 24.55, 23.89, 25.3],
+['2018/7/16', 22.1, 22.1, 22.1, 22.1],
+['2018/7/17', 19.89, 19.89, 19.89, 19.89],
+['2018/7/18', 17.9, 17.9, 17.9, 17.9],
+['2018/7/19', 16.11, 16.11, 16.11, 16.11],
+['2018/7/20', 14.5, 14.5, 14.5, 14.5],
+['2018/7/23', 13.05, 13.05, 13.05, 13.05],
+]);
+function splitData(rawData) {
+    var categoryData = [];
+    var values = []
+    for (var i = 0; i < rawData.length; i++) {
+        categoryData.push(rawData[i].splice(0, 1)[0]);
+        values.push(rawData[i])
+    }
+    return {
+        categoryData: categoryData,
+        values: values
+    };
+}
+function calculateMA(dayCount) {
+    var result = [];
+    for (var i = 0, len = data0.values.length; i < len; i++) {
+        if (i < dayCount) {
+            result.push('-');
+            continue;
+        }
+        var sum = 0;
+        for (var j = 0; j < dayCount; j++) {
+            sum += data0.values[i - j][1];
+        }
+        result.push(Math.round((sum / dayCount)*100, 2)/100);
+    }
+    return result;
+}
+option = {
+    title: {
+        text: '长生生物',
+        left: 0
+    },
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'cross'
+        }
+    },
+    legend: {
+        data: ['日K', 'MA5', 'MA10', 'MA20', 'MA30']
+    },
+    grid: {
+        left: '10%',
+        right: '10%',
+        bottom: '15%'
+    },
+    xAxis: {
+        type: 'category',
+        data: data0.categoryData,
+        scale: true,
+        boundaryGap : false,
+        axisLine: {onZero: false},
+        splitLine: {show: false},
+        splitNumber: 20,
+        min: 'dataMin',
+        max: 'dataMax'
+    },
+    yAxis: {
+        scale: true,
+        splitArea: {
+            show: true
+        }
+    },
+    dataZoom: [
+        {
+            type: 'inside',
+            start: 50,
+            end: 100
+        },
+        {
+            show: true,
+            type: 'slider',
+            y: '90%',
+            start: 50,
+            end: 100
+        }
+    ],
+    series: [
+        {
+            name: '日K',
+            type: 'candlestick',
+            data: data0.values,
+            itemStyle: {
+                normal: {
+                    color: upColor,
+                    color0: downColor,
+                    borderColor: upBorderColor,
+                    borderColor0: downBorderColor
+                }
+            },
+            markPoint: {
+                label: {
+                    normal: {
+                        formatter: function (param) {
+                            return param != null ? Math.round(param.value) : '';
+                        }
+                    }
+                },
+                data: [
+                    {
+                        name: 'XX标点',
+                        coord: ['2013/5/31', 2300],
+                        value: 2300,
+                        itemStyle: {
+                            normal: {color: 'rgb(41,60,85)'}
+                        }
+                    },
+                    {
+                        name: 'highest value',
+                        type: 'max',
+                        valueDim: 'highest'
+                    },
+                    {
+                        name: 'lowest value',
+                        type: 'min',
+                        valueDim: 'lowest'
+                    },
+                    {
+                        name: 'average value on close',
+                        type: 'average',
+                        valueDim: 'close'
+                    }
+                ],
+                tooltip: {
+                    formatter: function (param) {
+                        return param.name + '<br>' + (param.data.coord || '');
+                    }
+                }
+            },
+            markLine: {
+                symbol: ['none', 'none'],
+                data: [
+                    [
+                        {
+                            name: 'from lowest to highest',
+                            type: 'min',
+                            valueDim: 'lowest',
+                            symbol: 'circle',
+                            symbolSize: 10,
+                            label: {
+                                normal: {show: false},
+                                emphasis: {show: false}
+                            }
+                        },
+                        {
+                            type: 'max',
+                            valueDim: 'highest',
+                            symbol: 'circle',
+                            symbolSize: 10,
+                            label: {
+                                normal: {show: false},
+                                emphasis: {show: false}
+                            }
+                        }
+                    ],
+                    {
+                        name: 'min line on close',
+                        type: 'min',
+                        valueDim: 'close'
+                    },
+                    {
+                        name: 'max line on close',
+                        type: 'max',
+                        valueDim: 'close'
+                    }
+                ]
+            }
+        },
+        {
+            name: 'MA5',
+            type: 'line',
+            data: calculateMA(5),
+            smooth: true,
+            lineStyle: {
+                normal: {opacity: 0.5}
+            }
+        },
+        {
+            name: 'MA10',
+            type: 'line',
+            data: calculateMA(10),
+            smooth: true,
+            lineStyle: {
+                normal: {opacity: 0.5}
+            }
+        },
+        {
+            name: 'MA20',
+            type: 'line',
+            data: calculateMA(20),
+            smooth: true,
+            lineStyle: {
+                normal: {opacity: 0.5}
+            }
+        },
+        {
+            name: 'MA30',
+            type: 'line',
+            data: calculateMA(30),
+            smooth: true,
+            lineStyle: {
+                normal: {opacity: 0.5}
+            }
+        },
+    ]
+};
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+   </body>
+</html>
