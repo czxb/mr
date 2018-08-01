@@ -1,0 +1,166 @@
+library(RMySQL)
+library(messyr)
+engine = dbConnect(RMySQL::MySQL(), dbname = '交易数据', username = 'root', password = '12345', host = 'localhost', port = 3306)
+
+# 查看所选数据库的所有表格
+dbListTables(engine)
+# 从数据库中读取数据存储为数据框
+ir = dbReadTable(engine, "002337前复权数据")
+# 创建一个数据框
+df = ibor()
+# 因为dbWriteTable()函数在我的电脑上总是出错，所以我不得不使用MySQL语句插入表格
+# 需要把日期加上单引号才能写入为日期格式
+df$日期 = paste0('\'', df$日期,'\'')
+# 设置变量名称的编码格式
+dbSendQuery(engine,'SET NAMES utf8')
+dbSendQuery(engine, "drop table 隔夜SHIBOR")
+dbSendQuery(engine, "CREATE TABLE 隔夜SHIBOR(
+            日期 DATE,
+            `利率(%)` DOUBLE,
+            `涨跌幅(BP)` DOUBLE
+            )")
+strSQL <- paste(
+  'insert into 隔夜SHIBOR(`日期`, `利率(%)`, `涨跌幅(BP)`) values',
+  paste(sprintf("(%s,'%f', %f )", df$日期, df$`利率(%)`, df$`涨跌幅(BP)`), collapse=', '),
+  sep = ' '
+)
+dbSendQuery(engine, strSQL)
+
+# 关闭连接
+dbDisconnect(engine)
+
+
+## 创建拆借利率数据库
+rm(list = ls())
+library(RMySQL)
+library(messyr)
+engine = dbConnect(RMySQL::MySQL(), dbname = '拆借利率', username = 'root', password = '12345', host = 'localhost', port = 3306)
+iborpro_mysql <- function(iterm = "SHIBOR-CNY-ON", name = "隔夜SHIBOR"){
+  df = iborpro(iterm = iterm)
+  df$日期 = paste0('\'', df$日期,'\'')
+  sql2 <- paste0(
+    "CREATE TABLE ",
+    name,
+    "(日期 DATE,
+    `利率(%)` DOUBLE,
+    `涨跌幅(BP)` DOUBLE
+  )", sep = ' '
+  )
+  dbSendQuery(engine, sql2)
+  sql3 <- paste0(
+  "insert into ", name, "(`日期`, `利率(%)`, `涨跌幅(BP)`) values",
+  paste(sprintf("(%s,'%f', %f )", df$日期, df$`利率(%)`, df$`涨跌幅(BP)`), collapse=', ')
+  )
+  dbSendQuery(engine, sql3)
+}
+
+iborpro_mysql('SHIBOR-CNY-ON', '`ON-上海同业拆借利率`')
+iborpro_mysql('SHIBOR-CNY-1W', '`1W-上海同业拆借利率`')
+iborpro_mysql('SHIBOR-CNY-2W', '`2W-上海同业拆借利率`')
+iborpro_mysql('SHIBOR-CNY-1M', '`1M-上海同业拆借利率`')
+iborpro_mysql('SHIBOR-CNY-3M', '`3M-上海同业拆借利率`')
+iborpro_mysql('SHIBOR-CNY-6M', '`6M-上海同业拆借利率`')
+iborpro_mysql('SHIBOR-CNY-9M', '`9M-上海同业拆借利率`')
+iborpro_mysql('SHIBOR-CNY-1Y', '`1Y-上海同业拆借利率`')
+iborpro_mysql('CHIBOR-CNY-ON', '`ON-中国银行间同业拆借利率`')
+iborpro_mysql('CHIBOR-CNY-1W', '`1W-中国银行间同业拆借利率`')
+iborpro_mysql('CHIBOR-CNY-2W', '`2W-中国银行间同业拆借利率`')
+iborpro_mysql('CHIBOR-CNY-3W', '`3W-中国银行间同业拆借利率`')
+iborpro_mysql('CHIBOR-CNY-1M', '`1M-中国银行间同业拆借利率`')
+iborpro_mysql('CHIBOR-CNY-2M', '`2M-中国银行间同业拆借利率`')
+iborpro_mysql('CHIBOR-CNY-3M', '`3M-中国银行间同业拆借利率`')
+iborpro_mysql('CHIBOR-CNY-4M', '`4M-中国银行间同业拆借利率`')
+iborpro_mysql('CHIBOR-CNY-6M', '`6M-中国银行间同业拆借利率`')
+iborpro_mysql('CHIBOR-CNY-9M', '`9M-中国银行间同业拆借利率`')
+iborpro_mysql('CHIBOR-CNY-1Y', '`1Y-中国银行间同业拆借利率`')
+iborpro_mysql('LIBOR-GBP-ON', '`ON-伦敦同业拆借利率—英镑`')
+iborpro_mysql('LIBOR-GBP-1W', '`1W-伦敦同业拆借利率—英镑`')
+iborpro_mysql('LIBOR-GBP-1M', '`1M-伦敦同业拆借利率—英镑`')
+iborpro_mysql('LIBOR-GBP-2M', '`2M-伦敦同业拆借利率—英镑`')
+iborpro_mysql('LIBOR-GBP-3M', '`3M-伦敦同业拆借利率—英镑`')
+iborpro_mysql('LIBOR-GBP-8M', '`8M-伦敦同业拆借利率—英镑`')
+iborpro_mysql('LIBOR-USD-ON', '`ON-伦敦同业拆借利率—美元`')
+iborpro_mysql('LIBOR-USD-1W', '`1W-伦敦同业拆借利率—美元`')
+iborpro_mysql('LIBOR-USD-1M', '`1M-伦敦同业拆借利率—美元`')
+iborpro_mysql('LIBOR-USD-2M', '`2M-伦敦同业拆借利率—美元`')
+iborpro_mysql('LIBOR-USD-3M', '`3M-伦敦同业拆借利率—美元`')
+iborpro_mysql('LIBOR-USD-8M', '`8M-伦敦同业拆借利率—美元`')
+iborpro_mysql('LIBOR-EUR-ON', '`ON-伦敦同业拆借利率—欧元`')
+iborpro_mysql('LIBOR-EUR-1W', '`1W-伦敦同业拆借利率—欧元`')
+iborpro_mysql('LIBOR-EUR-1M', '`1M-伦敦同业拆借利率—欧元`')
+iborpro_mysql('LIBOR-EUR-2M', '`2M-伦敦同业拆借利率—欧元`')
+iborpro_mysql('LIBOR-EUR-3M', '`3M-伦敦同业拆借利率—欧元`')
+iborpro_mysql('LIBOR-EUR-8M', '`8M-伦敦同业拆借利率—欧元`')
+iborpro_mysql('LIBOR-JPY-ON', '`ON-伦敦同业拆借利率—日元`')
+iborpro_mysql('LIBOR-JPY-1W', '`1W-伦敦同业拆借利率—日元`')
+iborpro_mysql('LIBOR-JPY-1M', '`1M-伦敦同业拆借利率—日元`')
+iborpro_mysql('LIBOR-JPY-2M', '`2M-伦敦同业拆借利率—日元`')
+iborpro_mysql('LIBOR-JPY-3M', '`3M-伦敦同业拆借利率—日元`')
+iborpro_mysql('LIBOR-JPY-8M', '`8M-伦敦同业拆借利率—日元`')
+iborpro_mysql('EURIBOR-EUR-1W', '`1W-欧洲银行间同业拆借利率`')
+iborpro_mysql('EURIBOR-EUR-2W', '`2W-欧洲银行间同业拆借利率`')
+iborpro_mysql('EURIBOR-EUR-3W', '`3W-欧洲银行间同业拆借利率`')
+iborpro_mysql('EURIBOR-EUR-1M', '`1M-欧洲银行间同业拆借利率`')
+iborpro_mysql('EURIBOR-EUR-2M', '`2M-欧洲银行间同业拆借利率`')
+iborpro_mysql('EURIBOR-EUR-3M', '`3M-欧洲银行间同业拆借利率`')
+iborpro_mysql('EURIBOR-EUR-4M', '`4M-欧洲银行间同业拆借利率`')
+iborpro_mysql('EURIBOR-EUR-5M', '`5M-欧洲银行间同业拆借利率`')
+iborpro_mysql('EURIBOR-EUR-6M', '`6M-欧洲银行间同业拆借利率`')
+iborpro_mysql('EURIBOR-EUR-7M', '`7M-欧洲银行间同业拆借利率`')
+iborpro_mysql('EURIBOR-EUR-8M', '`8M-欧洲银行间同业拆借利率`')
+iborpro_mysql('EURIBOR-EUR-9M', '`9M-欧洲银行间同业拆借利率`')
+iborpro_mysql('EURIBOR-EUR-10M', '`10M-欧洲银行间同业拆借利率`')
+iborpro_mysql('EURIBOR-EUR-11M', '`11M-欧洲银行间同业拆借利率`')
+iborpro_mysql('EURIBOR-EUR-1Y', '`1Y-欧洲银行间同业拆借利率`')
+iborpro_mysql('HIBOR-HKD-ON', '`ON-香港同业拆借利率—港元`')
+iborpro_mysql('HIBOR-HKD-1W', '`1W-香港同业拆借利率—港元`')
+iborpro_mysql('HIBOR-HKD-2W', '`2W-香港同业拆借利率—港元`')
+iborpro_mysql('HIBOR-HKD-1M', '`1M-香港同业拆借利率—港元`')
+iborpro_mysql('HIBOR-HKD-2M', '`2M-香港同业拆借利率—港元`')
+iborpro_mysql('HIBOR-HKD-3M', '`3M-香港同业拆借利率—港元`')
+iborpro_mysql('HIBOR-HKD-4M', '`4M-香港同业拆借利率—港元`')
+iborpro_mysql('HIBOR-HKD-5M', '`5M-香港同业拆借利率—港元`')
+iborpro_mysql('HIBOR-HKD-6M', '`6M-香港同业拆借利率—港元`')
+iborpro_mysql('HIBOR-HKD-7M', '`7M-香港同业拆借利率—港元`')
+iborpro_mysql('HIBOR-HKD-8M', '`8M-香港同业拆借利率—港元`')
+iborpro_mysql('HIBOR-HKD-9M', '`9M-香港同业拆借利率—港元`')
+iborpro_mysql('HIBOR-HKD-10M', '`10M-香港同业拆借利率—港元`')
+iborpro_mysql('HIBOR-HKD-11M', '`11M-香港同业拆借利率—港元`')
+iborpro_mysql('HIBOR-HKD-1Y', '`1Y-香港同业拆借利率—港元`')
+iborpro_mysql('HIBOR-USD-ON', '`ON-香港同业拆借利率—美元`')
+iborpro_mysql('HIBOR-USD-1W', '`1W-香港同业拆借利率—美元`')
+iborpro_mysql('HIBOR-USD-2W', '`2W-香港同业拆借利率—美元`')
+iborpro_mysql('HIBOR-USD-1M', '`1M-香港同业拆借利率—美元`')
+iborpro_mysql('HIBOR-USD-2M', '`2M-香港同业拆借利率—美元`')
+iborpro_mysql('HIBOR-USD-3M', '`3M-香港同业拆借利率—美元`')
+iborpro_mysql('HIBOR-USD-4M', '`4M-香港同业拆借利率—美元`')
+iborpro_mysql('HIBOR-USD-5M', '`5M-香港同业拆借利率—美元`')
+iborpro_mysql('HIBOR-USD-6M', '`6M-香港同业拆借利率—美元`')
+iborpro_mysql('HIBOR-USD-7M', '`7M-香港同业拆借利率—美元`')
+iborpro_mysql('HIBOR-USD-8M', '`8M-香港同业拆借利率—美元`')
+iborpro_mysql('HIBOR-USD-9M', '`9M-香港同业拆借利率—美元`')
+iborpro_mysql('HIBOR-USD-10M', '`10M-香港同业拆借利率—美元`')
+iborpro_mysql('HIBOR-USD-11M', '`11M-香港同业拆借利率—美元`')
+iborpro_mysql('HIBOR-USD-1Y', '`1Y-香港同业拆借利率—美元`')
+iborpro_mysql('HIBOR-CNY-ON', '`ON-香港同业拆借利率—人民币`')
+iborpro_mysql('HIBOR-CNY-1W', '`1W-香港同业拆借利率—人民币`')
+iborpro_mysql('HIBOR-CNY-2W', '`2W-香港同业拆借利率—人民币`')
+iborpro_mysql('HIBOR-CNY-1M', '`1M-香港同业拆借利率—人民币`')
+iborpro_mysql('HIBOR-CNY-2M', '`2M-香港同业拆借利率—人民币`')
+iborpro_mysql('HIBOR-CNY-3M', '`3M-香港同业拆借利率—人民币`')
+iborpro_mysql('HIBOR-CNY-6M', '`6M-香港同业拆借利率—人民币`')
+iborpro_mysql('HIBOR-CNY-1Y', '`1Y-香港同业拆借利率—人民币`')
+iborpro_mysql('SIBOR-SGD-1M', '`1M-新加坡同业拆借利率—新加坡元`')
+iborpro_mysql('SIBOR-SGD-2M', '`2M-新加坡同业拆借利率—新加坡元`')
+iborpro_mysql('SIBOR-SGD-3M', '`3M-新加坡同业拆借利率—新加坡元`')
+iborpro_mysql('SIBOR-SGD-6M', '`6M-新加坡同业拆借利率—新加坡元`')
+iborpro_mysql('SIBOR-SGD-9M', '`9M-新加坡同业拆借利率—新加坡元`')
+iborpro_mysql('SIBOR-SGD-1Y', '`1Y-新加坡同业拆借利率—新加坡元`')
+iborpro_mysql('SIBOR-USD-1M', '`1M-新加坡同业拆借利率—美元`')
+iborpro_mysql('SIBOR-USD-2M', '`2M-新加坡同业拆借利率—美元`')
+iborpro_mysql('SIBOR-USD-3M', '`3M-新加坡同业拆借利率—美元`')
+iborpro_mysql('SIBOR-USD-6M', '`6M-新加坡同业拆借利率—美元`')
+iborpro_mysql('SIBOR-USD-9M', '`9M-新加坡同业拆借利率—美元`')
+iborpro_mysql('SIBOR-USD-1Y', '`1Y-新加坡同业拆借利率—美元`')
+iborpro_mysql('SIBOR-USD-1Y', '`1Y-新加坡同业拆借利率—美元`')
+iborpro_mysql('SIBOR-USD-9M', '`9M-新加坡同业拆借利率—美元`')
