@@ -9,17 +9,18 @@ prog def ctbc
 	version 14.0
 	syntax, [Start(string) End(string) SHELLpath(string) REShape Plot YLAbel(string)]
 	clear all
+	local path = "`c(pwd)'"
 	if "`start'" == "" local start = "19900101"
 	if "`end'" == "" local end: disp %dCYND date("`c(current_date)'","DMY")
 	if "`ylabel'" == "" local ylabel = "0(2)10"
 	if "`shellpath'" == "" local shellpath "/Users/mr.cheng/anaconda3/bin"
 	di "正在下载和整理数据······"
 	qui{
-		!`shellpath'/cn-treasury-curve -f zipline treasury-curve.csv
+		!`shellpath'/cn-treasury-curve -f zipline `path'/treasury-curve.csv
 	}
 	di "下载完成······"
 	di "开始导入数据······"
-	qui import delimited treasury-curve.csv, varnames(nonames) clear
+	qui import delimited `path'/treasury-curve.csv, varnames(nonames) clear
 	ren v1 date
 	ren v2 m1
 	ren v3 m3
