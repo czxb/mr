@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+   </head>
+   <body style="height: 100%; margin: 0">
+       <div id="container" style="height: 100%"></div>
+       <script type="text/javascript" src="http://www.czxa.top/jslib/ec/echarts.min.js"></script>
+       <script type="text/javascript" src="http://www.czxa.top/jslib/ec/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="http://www.czxa.top/jslib/ec/ecStat.min.js"></script>
+       <script type="text/javascript" src="http://www.czxa.top/jslib/ec/dataTool.min.js"></script>
+       <script type="text/javascript" src="http://www.czxa.top/jslib/ec/china.js"></script>
+       <script type="text/javascript" src="http://www.czxa.top/jslib/ec/world.js"></script>
+       <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+       <script type="text/javascript" src="http://www.czxa.top/jslib/ec/bmap.min.js"></script>
+       <script type="text/javascript" src="http://www.czxa.top/jslib/ec/simplex.js"></script>
+       <script type="text/javascript" src="http://www.czxa.top/jslib/ec/MIDI.min.js"></script>
+       <script type="text/javascript" src="http://www.czxa.top/jslib/ec/plugin.webaudio.js"></script>
+       <script type="text/javascript" src="http://www.czxa.top/jslib/ec/Base64.js"></script>
+       <script type="text/javascript" src="http://www.czxa.top/jslib/ec/Base64binary.js"></script>
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+// 主题选择：vintage/dark/macarons/infographic/shine/roma
+var myChart = echarts.init(dom, 'dark');
+var app = {};
+option = null;
+
+var xAxisData = [
+'2016-11-30',
+'2017-4-20',
+'2017-4-23',
+'2017-4-30',
+'2017-5-7',
+'2017-5-14',
+'2017-5-21',
+'2017-5-28',
+'2017-6-4',
+'2017-6-11',
+'2017-6-18',
+'2017-6-25',
+'2017-7-2',
+'2017-7-9',
+'2017-7-16',
+'2017-7-23',
+'2017-7-30',
+'2017-8-6',
+'2017-8-13',
+'2017-8-20',
+'2017-8-27',
+'2017-9-3',
+'2017-9-10',
+'2017-9-17',
+'2017-9-24',
+'2017-10-1',
+'2017-10-8',
+'2017-10-15',
+'2017-10-22',
+'2017-10-29',
+'2017-11-5',
+'2017-11-12',
+'2017-11-19',
+'2017-11-26',
+'2017-12-3',
+'2017-12-10',
+'2017-12-17',
+'2017-12-24',
+'2018-1-1',
+'2018-1-8',
+'2018-1-15',
+'2018-1-22',
+'2018-1-29',
+'2018-2-5'];
+var data = [
+25.54599952697754,
+10.43099975585938,
+41.94300079345703,
+45.7400016784668,
+47.12200164794922,
+40.42800140380859,
+43.92300033569336,
+25.9060001373291,
+39.75099945068359,
+34.90999984741211,
+54.73600006103516,
+29.33200073242188,
+25.69499969482422,
+35.31000137329102,
+54.15399932861328,
+56.87799835205078,
+47.09000015258789,
+46.31999969482422,
+41.10300064086914,
+27.86300086975098,
+99.58300018310547,
+66.74099731445313,
+33.19100189208984,
+50.41799926757813,
+34.18000030517578,
+37.63600158691406,
+31.12700080871582,
+33.39699935913086,
+48.40399932861328,
+58.67599868774414,
+37.22800064086914,
+37.58300018310547,
+38.3380012512207,
+25.54599952697754,
+51.19200134277344,
+22.11599922180176,
+45.35499954223633,
+38.82500076293945,
+18.30999946594238,
+23.21999931335449,
+67.7760009765625,
+1.991000056266785,
+7.298999786376953,
+12.27000045776367];
+option = {
+    title: {
+        text: '末末同学每周的魔鬼步伐',
+        left: 'center',
+        top: '20'
+    },
+    backgroundColor: '#08263a',
+    xAxis: {
+        show: true,
+        data: xAxisData
+   },
+    visualMap: {
+        show: false,
+        min: 0,
+        max: 50,
+        dimension: 0,
+        inRange: {
+            color: ['#4a657a', '#308e92', '#b1cfa5', '#f5d69f', '#f5898b', '#ef5055']
+        }
+    },
+    yAxis: {
+        name : "末末的每周步数(千步)",
+        axisLine: {
+            show: false
+        },
+        axisLabel: {
+            textStyle: {
+                color: '#4a657a'
+            }  
+        },
+        splitLine: {
+            show: true,
+            lineStyle: {
+                color: '#08263f'
+            }
+        },
+        axisTick: {
+            show: false
+        }
+    },
+    series: [{
+        type: 'bar',
+        data: data,
+        itemStyle: {
+            normal: {
+                barBorderRadius: 5,
+                shadowBlur: 10,
+                shadowColor: '#111'
+            }
+        },
+        animationEasing: 'elasticOut',
+        animationEasingUpdate: 'elasticOut',
+        animationDelay: function (idx) {
+            return idx * 20;
+        },
+        animationDelayUpdate: function (idx) {
+            return idx * 20;
+        }
+    }]
+};
+var audioLoaded = false;
+myChart.on('mouseover', function(e) {
+    var note = Math.round(e.value / 2) + 40;
+    if (audioLoaded) {
+        var delay = 0;
+        var velocity = 127;
+        
+        MIDI.setVolume(0, 127);
+        MIDI.noteOn(0, note, velocity, delay);
+        MIDI.noteOff(0, note, delay + 0.75);
+    }
+});
+
+MIDI.loadPlugin({
+    soundfontUrl: "https://cdn.rawgit.com/mudcube/MIDI.js/master/examples/soundfont/",
+    instrument: "acoustic_grand_piano",
+    onprogress: function(state, progress) {
+        console.log(state, progress);
+    },
+    onsuccess: function() {
+        audioLoaded = true;
+    }
+});
+        myChart.setOption(option); 
+    </script>
+</body>

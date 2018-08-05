@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+   </head>
+   <body style="height: 100%; margin: 0">
+       <div id="container" style="height: 100%"></div>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+var geoCoorddata = {
+'广州': [113.3076496751518, 23.12004910207623],
+'苏州': [120.6199071154899, 31.31798736795244],
+'大兴': [116.4251945973791, 39.65279011836446],
+'朝阳': [116.5216948910808, 39.95895316640668],
+'徐州': [117.1881066231769, 34.27155343109188],
+'深圳': [114.0259736573215, 22.54605354620525],
+'阜阳': [115.8209322590464, 32.90121133056961],
+'郑州': [113.6496438498645, 34.75661006414025],
+'佛山': [113.1340256353934, 23.03509484051438],
+'南昌': [115.893527545836, 28.68957800014115],
+'中山': [113.422060020798, 22.545177514513],
+'合肥': [117.282699091683, 31.86694226068694],
+'东莞': [113.7634339907566, 23.04302381536824],
+'台北市': [121.5201088107963, 25.06302993561172],
+'舟山': [122.1698720983516, 30.03601030255394],
+'金华': [119.6525757036814, 29.10289910539069],
+'元朗区': [114.0333906141942, 22.45393186491956],
+'沙坪坝': [106.3748048926506, 29.63054813662879],
+'湾仔区': [114.1947655950058, 22.27369503936191],
+'杨浦': [121.5357165996346, 31.3045104795419],
+'汕尾': [115.3729242893998, 22.77873050016389],
+'潮州': [116.6300759908639, 23.6618116765165],
+'浦东新区': [121.6384813140922, 31.23089534913395],
+'长治': [113.1202920857251, 36.20166438574343],
+'拉萨': [89.1379816840313, 31.36731540271471],
+'汕头': [116.7286502883411, 23.3839084532692],
+'自贡': [104.7838912684873, 29.35215139296072],
+'黄山': [118.077546127263, 30.2777458951202],
+'观塘区': [114.2367813241699, 22.31625330841556],
+'海淀': [116.2396778010215, 40.03316204507791],
+'厦门': [118.1038860456638, 24.48923061246923],
+'芜湖': [118.3841084232283, 31.36601978754301],
+'南阳': [112.5428419005123, 33.0114195691165],
+'茂名': [110.9312453306758, 21.66822571882161],
+'巢湖': [117.8804904170333, 31.60873254754582],
+'葵青区': [114.1209750149281, 22.33942049166818],
+'蚌埠': [117.3570798658758, 32.92949890669797],
+'宁波': [121.5790059725893, 29.88525896591806],
+'贵阳': [106.7091770961758, 26.62990674144093],
+'玉树': [96.20254367226111, 35.49976100427467],
+'江门': [113.0781253411537, 22.57511678345104],
+'长沙': [112.9793527876505, 28.21347823085322],
+'北碚': [106.5203424543245, 29.86659606686515],
+'太原': [112.5508635890553, 37.89027705396754],
+'珠海': [113.5624470261899, 22.25691464612574],
+'福州': [119.3302211071267, 26.04712549657293],
+'滁州': [118.3245703509769, 32.31735059538377],
+'南京': [118.7780744080256, 32.05723550180587],
+'江津': [106.2692818563863, 29.03535119066828],
+'沙田区': [114.2132194542578, 22.39425797953928],
+'台南市': [121.9738709787157, 24.0869567188049],
+'彰化县': [121.9738709787157, 24.0869567188049],
+'渝北': [106.7537985311954, 29.81626408242649],
+'湛江': [110.3650672628503, 21.25746310376432],
+'石家庄': [114.5220818442077, 38.04895831461545],
+'绍兴': [119.9572024206638, 29.15949412076093],
+'商丘': [115.6418856878502, 34.43858864024636],
+'唐山': [118.1834505977341, 39.6505309225366],
+'乌鲁木齐': [87.56498774111579, 43.84038034721766],
+'揭阳': [116.3795008553824, 23.54799946692614],
+'巴音郭楞': [86.20313835139922, 41.7537858657909],
+'武汉': [114.3162001026813, 30.58108412692075],
+'威海': [122.093958365806, 37.52878708125143],
+'延边': [129.4859019581615, 42.89641360374414],
+'肇庆': [112.4796533699162, 23.07866328292893],
+'万州': [108.4134386366985, 30.71005418436643],
+'池州': [117.4944767715936, 30.66001924816063],
+'黄大仙区': [114.2142750717227, 22.34698094777725],
+'无锡': [120.3054559005359, 31.57003745192303],
+'焦作': [113.2118358849916, 35.23460755498594],
+'清远': [113.0407733489083, 23.69846855042216],
+'淮南': [117.0186388632946, 32.64281182374795],
+'六安': [116.5052526829841, 31.75555835519844],
+'宝坻': [117.4114205907804, 39.61554400413299],
+'梅州': [116.1264030983686, 24.30457060603053],
+'扬州': [119.4277775511698, 32.40850525456844],
+'邯郸': [114.4826939323422, 36.60930792847117],
+'哈尔滨': [126.6577168554461, 45.7732246332393],
+'济南': [117.0249670662902, 36.68278472716141],
+'惠州': [114.410658079971, 23.11353985240842],
+'河源': [114.7137214758748, 23.75725085046901],
+'江北': [106.7136147309424, 29.61931774406401],
+'宁德': [117.9849431199074, 26.05011829566066],
+'油尖旺区': [114.1768173916379, 22.30918231890233],
+'泉州': [118.6003623432294, 24.9016523839911],
+'泸州': [105.4439702892064, 28.8959298038601],
+'宜宾': [102.899159723604, 30.36748093795755],
+'阿勒泰': [87.92621436018869, 47.89013572574888],
+'青岛': [120.3844281836819, 36.10521490127382],
+'红河': [103.3840647571592, 23.367717516499],
+'安庆': [117.0587387721073, 30.5378978173811],
+'河西': [117.2361654506185, 39.08449373961522],
+'马鞍山': [118.515881846623, 31.68852815888003],
+'亳州': [115.7879282451181, 33.87121056530193],
+'通化': [126.5645439888333, 43.87198833435933],
+'遂宁': [102.899159723604, 30.36748093795755],
+'北区': [114.1861241025708, 22.29358599327966],
+'路环岛': [117.2165354512614, 39.12162940756943],
+'广安': [102.899159723604, 30.36748093795755],
+'镇江': [119.4558354051295, 32.20440944359928],
+'西城': [116.373190104018, 39.93428014370851],
+'望德堂区': [113.5605458784601, 22.20241342913891],
+'林芝': [89.1379816840313, 31.36731540271471],
+'仙桃': [113.3874481935784, 30.29396600492232],
+'长春': [125.3136424272007, 43.89833760709784],
+'东区': [114.1861241025708, 22.29358599327966],
+'柳州': [109.4224018101511, 24.32905335246722],
+'酉阳': [108.806808237325, 28.90527766239135],
+'吉林': [126.5645439888333, 43.87198833435933],
+'海口': [110.3308018483363, 20.02207127695224],
+'呼和浩特': [111.6603505200542, 40.82831887308159],
+'宜昌': [111.3109810919608, 30.73275781802591],
+'乌海': [114.4158675481661, 43.46823822194904],
+'韶关': [113.3948175587587, 23.40800372902474],
+'杭州': [120.2193754157201, 30.2592444615361],
+'昆明': [102.7146011387805, 25.04915310045316],
+'襄阳': [112.4105621921321, 31.20931625013975],
+'顺义': [116.7282290452814, 40.15495147044135],
+'沈阳': [123.432790921605, 41.80864478351575],
+'文昌': [110.7809094449892, 19.75094738014498],
+'大连': [121.5934777814352, 38.94870993830429],
+'晋城': [112.8673327575068, 35.49983446722556],
+'宝山': [121.4090412184494, 31.39862269446678],
+'成都': [102.899159723604, 30.36748093795755],
+'盐城': [119.3684889383585, 33.01379716995394],
+'菏泽': [115.4633597745275, 35.26244049607468],
+'徐汇': [121.4462350047294, 31.1691520895922],
+'西贡区': [114.3944569728349, 22.30523210667424],
+'曲靖': [103.7825388880267, 25.5207581428705],
+'包头': [114.4158675481661, 43.46823822194904],
+'西安': [108.9530982791962, 34.27779989783063],
+'黄冈': [114.9066180465751, 30.44610893790113],
+'邢台': [114.5204868129441, 37.069531196912],
+'潍坊': [119.1426338229705, 36.71611487305138],
+'四平': [124.3913820736798, 43.17552470112557],
+'温州': [120.6906347337091, 28.00283759404125],
+'毕节': [106.7349961033045, 26.90282592779676],
+'株洲': [113.1316953410707, 27.82743292766265],
+'南岸': [106.6671784990355, 29.54151461890251],
+'阳江': [111.9770097558739, 21.87151730451877],
+'南区': [114.1861241025708, 22.29358599327966],
+    },
+    option = {
+        bmap: {
+            center: [113.65, 34.76],
+            zoom: 5,
+            roam: true,
+            mapStyle: {
+                styleJson: [{
+                    'featureType': 'land', //调整土地颜色
+                    'elementType': 'geometry',
+                    'stylers': {
+                        'color': '#081734'
+                    }
+                }, {
+                    'featureType': 'building', //调整建筑物颜色
+                    'elementType': 'geometry',
+                    'stylers': {
+                        'color': '#04406F'
+                    }
+                }, {
+                    'featureType': 'building', //调整建筑物标签是否可视
+                    'elementType': 'labels',
+                    'stylers': {
+                        'visibility': 'off'
+                    }
+                }, {
+                    'featureType': 'highway', //调整高速道路颜色
+                    'elementType': 'geometry',
+                    'stylers': {
+                        'color': '#015B99'
+                    }
+                }, {
+                    'featureType': 'highway', //调整高速名字是否可视
+                    'elementType': 'labels',
+                    'stylers': {
+                        'visibility': 'off'
+                    }
+                }, {
+                    'featureType': 'arterial', //调整一些干道颜色
+                    'elementType': 'geometry',
+                    'stylers': {
+                        'color': '#003051'
+                    }
+                }, {
+                    'featureType': 'arterial',
+                    'elementType': 'labels',
+                    'stylers': {
+                        'visibility': 'off'
+                    }
+                }, {
+                    'featureType': 'green',
+                    'elementType': 'geometry',
+                    'stylers': {
+                        'visibility': 'off'
+                    }
+                }, {
+                    'featureType': 'water',
+                    'elementType': 'geometry',
+                    'stylers': {
+                        'color': '#044161'
+                    }
+                }, {
+                    'featureType': 'subway', //调整地铁颜色
+                    'elementType': 'geometry.stroke',
+                    'stylers': {
+                        'color': '#003051'
+                    }
+                }, {
+                    'featureType': 'subway',
+                    'elementType': 'labels',
+                    'stylers': {
+                        'visibility': 'off'
+                    }
+                }, {
+                    'featureType': 'railway',
+                    'elementType': 'geometry',
+                    'stylers': {
+                        'visibility': 'off'
+                    }
+                }, {
+                    'featureType': 'railway',
+                    'elementType': 'labels',
+                    'stylers': {
+                        'visibility': 'off'
+                    }
+                }, {
+                    'featureType': 'all', //调整所有的标签的边缘颜色
+                    'elementType': 'labels.text.stroke',
+                    'stylers': {
+                        'color': '#313131'
+                    }
+                }, {
+                    'featureType': 'all', //调整所有标签的填充颜色
+                    'elementType': 'labels.text.fill',
+                    'stylers': {
+                        'color': '#FFFFFF'
+                    }
+                }, {
+                    'featureType': 'manmade',
+                    'elementType': 'geometry',
+                    'stylers': {
+                        'visibility': 'off'
+                    }
+                }, {
+                    'featureType': 'manmade',
+                    'elementType': 'labels',
+                    'stylers': {
+                        'visibility': 'off'
+                    }
+                }, {
+                    'featureType': 'local',
+                    'elementType': 'geometry',
+                    'stylers': {
+                        'visibility': 'off'
+                    }
+                }, {
+                    'featureType': 'local',
+                    'elementType': 'labels',
+                    'stylers': {
+                        'visibility': 'off'
+                    }
+                }, {
+                    'featureType': 'subway',
+                    'elementType': 'geometry',
+                    'stylers': {
+                        'lightness': -65
+                    }
+                }, {
+                    'featureType': 'railway',
+                    'elementType': 'all',
+                    'stylers': {
+                        'lightness': -40
+                    }
+                }, {
+                    'featureType': 'boundary',
+                    'elementType': 'geometry',
+                    'stylers': {
+                        'color': '#8b8787',
+                        'weight': '1',
+                        'lightness': -29
+                    }
+                }]
+            }
+        },
+        series: [{
+            type: 'lines',
+            mapType: 'china',
+            coordinateSystem: 'bmap',
+            zlevel: 1,
+            data: [
+{name: '苏州',toname: '广州',coords: [geoCoorddata['苏州'], geoCoorddata['广州']]}, 
+{name: '大兴',toname: '广州',coords: [geoCoorddata['大兴'], geoCoorddata['广州']]}, 
+{name: '朝阳',toname: '广州',coords: [geoCoorddata['朝阳'], geoCoorddata['广州']]}, 
+{name: '徐州',toname: '广州',coords: [geoCoorddata['徐州'], geoCoorddata['广州']]}, 
+{name: '深圳',toname: '广州',coords: [geoCoorddata['深圳'], geoCoorddata['广州']]}, 
+{name: '阜阳',toname: '广州',coords: [geoCoorddata['阜阳'], geoCoorddata['广州']]}, 
+{name: '郑州',toname: '广州',coords: [geoCoorddata['郑州'], geoCoorddata['广州']]}, 
+{name: '佛山',toname: '广州',coords: [geoCoorddata['佛山'], geoCoorddata['广州']]}, 
+{name: '南昌',toname: '广州',coords: [geoCoorddata['南昌'], geoCoorddata['广州']]}, 
+{name: '中山',toname: '广州',coords: [geoCoorddata['中山'], geoCoorddata['广州']]}, 
+{name: '合肥',toname: '广州',coords: [geoCoorddata['合肥'], geoCoorddata['广州']]}, 
+{name: '东莞',toname: '广州',coords: [geoCoorddata['东莞'], geoCoorddata['广州']]}, 
+{name: '台北市',toname: '广州',coords: [geoCoorddata['台北市'], geoCoorddata['广州']]}, 
+{name: '舟山',toname: '广州',coords: [geoCoorddata['舟山'], geoCoorddata['广州']]}, 
+{name: '金华',toname: '广州',coords: [geoCoorddata['金华'], geoCoorddata['广州']]}, 
+{name: '元朗区',toname: '广州',coords: [geoCoorddata['元朗区'], geoCoorddata['广州']]}, 
+{name: '沙坪坝',toname: '广州',coords: [geoCoorddata['沙坪坝'], geoCoorddata['广州']]}, 
+{name: '湾仔区',toname: '广州',coords: [geoCoorddata['湾仔区'], geoCoorddata['广州']]}, 
+{name: '杨浦',toname: '广州',coords: [geoCoorddata['杨浦'], geoCoorddata['广州']]}, 
+{name: '汕尾',toname: '广州',coords: [geoCoorddata['汕尾'], geoCoorddata['广州']]}, 
+{name: '潮州',toname: '广州',coords: [geoCoorddata['潮州'], geoCoorddata['广州']]}, 
+{name: '浦东新区',toname: '广州',coords: [geoCoorddata['浦东新区'], geoCoorddata['广州']]}, 
+{name: '长治',toname: '广州',coords: [geoCoorddata['长治'], geoCoorddata['广州']]}, 
+{name: '拉萨',toname: '广州',coords: [geoCoorddata['拉萨'], geoCoorddata['广州']]}, 
+{name: '汕头',toname: '广州',coords: [geoCoorddata['汕头'], geoCoorddata['广州']]}, 
+{name: '自贡',toname: '广州',coords: [geoCoorddata['自贡'], geoCoorddata['广州']]}, 
+{name: '黄山',toname: '广州',coords: [geoCoorddata['黄山'], geoCoorddata['广州']]}, 
+{name: '观塘区',toname: '广州',coords: [geoCoorddata['观塘区'], geoCoorddata['广州']]}, 
+{name: '海淀',toname: '广州',coords: [geoCoorddata['海淀'], geoCoorddata['广州']]}, 
+{name: '厦门',toname: '广州',coords: [geoCoorddata['厦门'], geoCoorddata['广州']]}, 
+{name: '芜湖',toname: '广州',coords: [geoCoorddata['芜湖'], geoCoorddata['广州']]}, 
+{name: '南阳',toname: '广州',coords: [geoCoorddata['南阳'], geoCoorddata['广州']]}, 
+{name: '茂名',toname: '广州',coords: [geoCoorddata['茂名'], geoCoorddata['广州']]}, 
+{name: '巢湖',toname: '广州',coords: [geoCoorddata['巢湖'], geoCoorddata['广州']]}, 
+{name: '葵青区',toname: '广州',coords: [geoCoorddata['葵青区'], geoCoorddata['广州']]}, 
+{name: '蚌埠',toname: '广州',coords: [geoCoorddata['蚌埠'], geoCoorddata['广州']]}, 
+{name: '宁波',toname: '广州',coords: [geoCoorddata['宁波'], geoCoorddata['广州']]}, 
+{name: '贵阳',toname: '广州',coords: [geoCoorddata['贵阳'], geoCoorddata['广州']]}, 
+{name: '玉树',toname: '广州',coords: [geoCoorddata['玉树'], geoCoorddata['广州']]}, 
+{name: '江门',toname: '广州',coords: [geoCoorddata['江门'], geoCoorddata['广州']]}, 
+{name: '长沙',toname: '广州',coords: [geoCoorddata['长沙'], geoCoorddata['广州']]}, 
+{name: '北碚',toname: '广州',coords: [geoCoorddata['北碚'], geoCoorddata['广州']]}, 
+{name: '太原',toname: '广州',coords: [geoCoorddata['太原'], geoCoorddata['广州']]}, 
+{name: '珠海',toname: '广州',coords: [geoCoorddata['珠海'], geoCoorddata['广州']]}, 
+{name: '福州',toname: '广州',coords: [geoCoorddata['福州'], geoCoorddata['广州']]}, 
+{name: '滁州',toname: '广州',coords: [geoCoorddata['滁州'], geoCoorddata['广州']]}, 
+{name: '南京',toname: '广州',coords: [geoCoorddata['南京'], geoCoorddata['广州']]}, 
+{name: '江津',toname: '广州',coords: [geoCoorddata['江津'], geoCoorddata['广州']]}, 
+{name: '沙田区',toname: '广州',coords: [geoCoorddata['沙田区'], geoCoorddata['广州']]}, 
+{name: '台南市',toname: '广州',coords: [geoCoorddata['台南市'], geoCoorddata['广州']]}, 
+{name: '彰化县',toname: '广州',coords: [geoCoorddata['彰化县'], geoCoorddata['广州']]}, 
+{name: '渝北',toname: '广州',coords: [geoCoorddata['渝北'], geoCoorddata['广州']]}, 
+{name: '湛江',toname: '广州',coords: [geoCoorddata['湛江'], geoCoorddata['广州']]}, 
+{name: '石家庄',toname: '广州',coords: [geoCoorddata['石家庄'], geoCoorddata['广州']]}, 
+{name: '绍兴',toname: '广州',coords: [geoCoorddata['绍兴'], geoCoorddata['广州']]}, 
+{name: '商丘',toname: '广州',coords: [geoCoorddata['商丘'], geoCoorddata['广州']]}, 
+{name: '唐山',toname: '广州',coords: [geoCoorddata['唐山'], geoCoorddata['广州']]}, 
+{name: '乌鲁木齐',toname: '广州',coords: [geoCoorddata['乌鲁木齐'], geoCoorddata['广州']]}, 
+{name: '揭阳',toname: '广州',coords: [geoCoorddata['揭阳'], geoCoorddata['广州']]}, 
+{name: '巴音郭楞',toname: '广州',coords: [geoCoorddata['巴音郭楞'], geoCoorddata['广州']]}, 
+{name: '武汉',toname: '广州',coords: [geoCoorddata['武汉'], geoCoorddata['广州']]}, 
+{name: '威海',toname: '广州',coords: [geoCoorddata['威海'], geoCoorddata['广州']]}, 
+{name: '延边',toname: '广州',coords: [geoCoorddata['延边'], geoCoorddata['广州']]}, 
+{name: '肇庆',toname: '广州',coords: [geoCoorddata['肇庆'], geoCoorddata['广州']]}, 
+{name: '万州',toname: '广州',coords: [geoCoorddata['万州'], geoCoorddata['广州']]}, 
+{name: '池州',toname: '广州',coords: [geoCoorddata['池州'], geoCoorddata['广州']]}, 
+{name: '黄大仙区',toname: '广州',coords: [geoCoorddata['黄大仙区'], geoCoorddata['广州']]}, 
+{name: '无锡',toname: '广州',coords: [geoCoorddata['无锡'], geoCoorddata['广州']]}, 
+{name: '焦作',toname: '广州',coords: [geoCoorddata['焦作'], geoCoorddata['广州']]}, 
+{name: '清远',toname: '广州',coords: [geoCoorddata['清远'], geoCoorddata['广州']]}, 
+{name: '淮南',toname: '广州',coords: [geoCoorddata['淮南'], geoCoorddata['广州']]}, 
+{name: '六安',toname: '广州',coords: [geoCoorddata['六安'], geoCoorddata['广州']]}, 
+{name: '宝坻',toname: '广州',coords: [geoCoorddata['宝坻'], geoCoorddata['广州']]}, 
+{name: '梅州',toname: '广州',coords: [geoCoorddata['梅州'], geoCoorddata['广州']]}, 
+{name: '扬州',toname: '广州',coords: [geoCoorddata['扬州'], geoCoorddata['广州']]}, 
+{name: '邯郸',toname: '广州',coords: [geoCoorddata['邯郸'], geoCoorddata['广州']]}, 
+{name: '哈尔滨',toname: '广州',coords: [geoCoorddata['哈尔滨'], geoCoorddata['广州']]}, 
+{name: '济南',toname: '广州',coords: [geoCoorddata['济南'], geoCoorddata['广州']]}, 
+{name: '惠州',toname: '广州',coords: [geoCoorddata['惠州'], geoCoorddata['广州']]}, 
+{name: '河源',toname: '广州',coords: [geoCoorddata['河源'], geoCoorddata['广州']]}, 
+{name: '江北',toname: '广州',coords: [geoCoorddata['江北'], geoCoorddata['广州']]}, 
+{name: '宁德',toname: '广州',coords: [geoCoorddata['宁德'], geoCoorddata['广州']]}, 
+{name: '油尖旺区',toname: '广州',coords: [geoCoorddata['油尖旺区'], geoCoorddata['广州']]}, 
+{name: '泉州',toname: '广州',coords: [geoCoorddata['泉州'], geoCoorddata['广州']]}, 
+{name: '泸州',toname: '广州',coords: [geoCoorddata['泸州'], geoCoorddata['广州']]}, 
+{name: '宜宾',toname: '广州',coords: [geoCoorddata['宜宾'], geoCoorddata['广州']]}, 
+{name: '阿勒泰',toname: '广州',coords: [geoCoorddata['阿勒泰'], geoCoorddata['广州']]}, 
+{name: '青岛',toname: '广州',coords: [geoCoorddata['青岛'], geoCoorddata['广州']]}, 
+{name: '红河',toname: '广州',coords: [geoCoorddata['红河'], geoCoorddata['广州']]}, 
+{name: '安庆',toname: '广州',coords: [geoCoorddata['安庆'], geoCoorddata['广州']]}, 
+{name: '河西',toname: '广州',coords: [geoCoorddata['河西'], geoCoorddata['广州']]}, 
+{name: '马鞍山',toname: '广州',coords: [geoCoorddata['马鞍山'], geoCoorddata['广州']]}, 
+{name: '亳州',toname: '广州',coords: [geoCoorddata['亳州'], geoCoorddata['广州']]}, 
+{name: '通化',toname: '广州',coords: [geoCoorddata['通化'], geoCoorddata['广州']]}, 
+{name: '遂宁',toname: '广州',coords: [geoCoorddata['遂宁'], geoCoorddata['广州']]}, 
+{name: '北区',toname: '广州',coords: [geoCoorddata['北区'], geoCoorddata['广州']]}, 
+{name: '路环岛',toname: '广州',coords: [geoCoorddata['路环岛'], geoCoorddata['广州']]}, 
+{name: '广安',toname: '广州',coords: [geoCoorddata['广安'], geoCoorddata['广州']]}, 
+{name: '镇江',toname: '广州',coords: [geoCoorddata['镇江'], geoCoorddata['广州']]}, 
+{name: '西城',toname: '广州',coords: [geoCoorddata['西城'], geoCoorddata['广州']]}, 
+{name: '望德堂区',toname: '广州',coords: [geoCoorddata['望德堂区'], geoCoorddata['广州']]}, 
+{name: '林芝',toname: '广州',coords: [geoCoorddata['林芝'], geoCoorddata['广州']]}, 
+{name: '仙桃',toname: '广州',coords: [geoCoorddata['仙桃'], geoCoorddata['广州']]}, 
+{name: '长春',toname: '广州',coords: [geoCoorddata['长春'], geoCoorddata['广州']]}, 
+{name: '东区',toname: '广州',coords: [geoCoorddata['东区'], geoCoorddata['广州']]}, 
+{name: '柳州',toname: '广州',coords: [geoCoorddata['柳州'], geoCoorddata['广州']]}, 
+{name: '酉阳',toname: '广州',coords: [geoCoorddata['酉阳'], geoCoorddata['广州']]}, 
+{name: '吉林',toname: '广州',coords: [geoCoorddata['吉林'], geoCoorddata['广州']]}, 
+{name: '海口',toname: '广州',coords: [geoCoorddata['海口'], geoCoorddata['广州']]}, 
+{name: '呼和浩特',toname: '广州',coords: [geoCoorddata['呼和浩特'], geoCoorddata['广州']]}, 
+{name: '宜昌',toname: '广州',coords: [geoCoorddata['宜昌'], geoCoorddata['广州']]}, 
+{name: '乌海',toname: '广州',coords: [geoCoorddata['乌海'], geoCoorddata['广州']]}, 
+{name: '韶关',toname: '广州',coords: [geoCoorddata['韶关'], geoCoorddata['广州']]}, 
+{name: '杭州',toname: '广州',coords: [geoCoorddata['杭州'], geoCoorddata['广州']]}, 
+{name: '昆明',toname: '广州',coords: [geoCoorddata['昆明'], geoCoorddata['广州']]}, 
+{name: '襄阳',toname: '广州',coords: [geoCoorddata['襄阳'], geoCoorddata['广州']]}, 
+{name: '顺义',toname: '广州',coords: [geoCoorddata['顺义'], geoCoorddata['广州']]}, 
+{name: '沈阳',toname: '广州',coords: [geoCoorddata['沈阳'], geoCoorddata['广州']]}, 
+{name: '文昌',toname: '广州',coords: [geoCoorddata['文昌'], geoCoorddata['广州']]}, 
+{name: '大连',toname: '广州',coords: [geoCoorddata['大连'], geoCoorddata['广州']]}, 
+{name: '晋城',toname: '广州',coords: [geoCoorddata['晋城'], geoCoorddata['广州']]}, 
+{name: '宝山',toname: '广州',coords: [geoCoorddata['宝山'], geoCoorddata['广州']]}, 
+{name: '成都',toname: '广州',coords: [geoCoorddata['成都'], geoCoorddata['广州']]}, 
+{name: '盐城',toname: '广州',coords: [geoCoorddata['盐城'], geoCoorddata['广州']]}, 
+{name: '菏泽',toname: '广州',coords: [geoCoorddata['菏泽'], geoCoorddata['广州']]}, 
+{name: '徐汇',toname: '广州',coords: [geoCoorddata['徐汇'], geoCoorddata['广州']]}, 
+{name: '西贡区',toname: '广州',coords: [geoCoorddata['西贡区'], geoCoorddata['广州']]}, 
+{name: '曲靖',toname: '广州',coords: [geoCoorddata['曲靖'], geoCoorddata['广州']]}, 
+{name: '包头',toname: '广州',coords: [geoCoorddata['包头'], geoCoorddata['广州']]}, 
+{name: '西安',toname: '广州',coords: [geoCoorddata['西安'], geoCoorddata['广州']]}, 
+{name: '黄冈',toname: '广州',coords: [geoCoorddata['黄冈'], geoCoorddata['广州']]}, 
+{name: '邢台',toname: '广州',coords: [geoCoorddata['邢台'], geoCoorddata['广州']]}, 
+{name: '潍坊',toname: '广州',coords: [geoCoorddata['潍坊'], geoCoorddata['广州']]}, 
+{name: '四平',toname: '广州',coords: [geoCoorddata['四平'], geoCoorddata['广州']]}, 
+{name: '温州',toname: '广州',coords: [geoCoorddata['温州'], geoCoorddata['广州']]}, 
+{name: '毕节',toname: '广州',coords: [geoCoorddata['毕节'], geoCoorddata['广州']]}, 
+{name: '株洲',toname: '广州',coords: [geoCoorddata['株洲'], geoCoorddata['广州']]}, 
+{name: '南岸',toname: '广州',coords: [geoCoorddata['南岸'], geoCoorddata['广州']]}, 
+{name: '阳江',toname: '广州',coords: [geoCoorddata['阳江'], geoCoorddata['广州']]}, 
+{name: '南区',toname: '广州',coords: [geoCoorddata['南区'], geoCoorddata['广州']]}, 
+            ],
+            //线上面的动态特效
+            effect: {
+                show: true,
+                period: 6,
+                trailLength: 0.7,
+                color: '#fff',
+                symbolSize: 4
+            },
+            lineStyle: {
+                normal: {
+                    width: '',
+                    color: '#a6c84c',
+                    curveness: 0.2
+                }
+            }
+        }, {
+            type: 'effectScatter',
+            mapType: 'china',
+            coordinateSystem: 'bmap',
+            zlevel: 3,
+            data: [{
+                name: '广州',
+                value: geoCoorddata['广州'].concat(200)
+            }, ],
+            rippleEffect: {
+                period: 10,
+                scale: 5,
+                brushType: 'fill'
+            },
+        }]
+    };
+myChart.setOption(option);
+
+
+
+
+
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+   </body>
+</html>

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html style="height: 400px">
+   <head>
+       <meta charset="utf-8">
+   </head>
+   <body style="height: 100%; margin: 0">
+       <div id="container" style="height: 100%"></div>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+function getVirtulData(year) {
+    year = year || '2017';
+    var date = +echarts.number.parseDate(year + '-01-01');
+    var data = [
+['2017/10/6', 12],
+['2017/10/7', 13],
+['2017/10/8', 8298],
+['2017/10/9', 8140],
+['2017/10/10', 7690],
+['2017/10/11', 7862],
+['2017/10/12', 8731],
+['2017/10/13', 6754],
+['2017/10/14', 7018],
+['2017/10/15', 7679],
+['2017/10/16', 8444],
+['2017/10/17', 7342],
+['2017/10/18', 10185],
+['2017/10/19', 7527],
+['2017/10/20', 5974],
+['2017/10/21', 9109],
+['2017/10/22', 16893],
+['2017/10/23', 8194],
+['2017/10/24', 8450],
+['2017/10/25', 14094],
+['2017/10/26', 10527],
+['2017/10/27', 9582],
+['2017/10/28', 9608],
+['2017/10/29', 4525],
+['2017/10/30', 9087],
+['2017/10/31', 7233],
+['2017/11/1', 8022],
+['2017/11/2', 10771],
+['2017/11/3', 20771],
+['2017/11/4', 8133],
+['2017/11/5', 6005],
+['2017/11/6', 12965],
+['2017/11/7', 8549],
+['2017/11/8', 14212],
+['2017/11/9', 16961],
+['2017/11/10', 5919],
+['2017/11/11', 20960],
+['2017/11/12', 14938],
+['2017/11/13', 6015],
+['2017/11/14', 4088],
+['2017/11/15', 7584],
+['2017/11/16', 10346],
+['2017/11/17', 12614],
+['2017/11/18', 10222],
+['2017/11/19', 7194],
+['2017/11/20', 5078],
+['2017/11/21', 6564],
+['2017/11/22', 8858],
+['2017/11/23', 9766],
+['2017/11/24', 8412],
+['2017/11/25', 11419],
+['2017/11/26', 7711],
+['2017/11/27', 8367],
+['2017/11/28', 5278],
+['2017/11/29', 11284],
+['2017/11/30', 7907],
+['2017/12/1', 8623],
+['2017/12/2', 9326],
+['2017/12/3', 14901],
+['2017/12/4', 6454],
+['2017/12/5', 6602],
+['2017/12/6', 9770],
+['2017/12/7', 20275],
+['2017/12/8', 8802],
+['2017/12/9', 6911],
+['2017/12/10', 9488],
+['2017/12/11', 6249],
+['2017/12/12', 7546],
+['2017/12/13', 8830],
+['2017/12/14', 10209],
+['2017/12/15', 8169],
+['2017/12/16', 3229],
+['2017/12/17', 982],
+['2017/12/18', 5087],
+['2017/12/19', 8702],
+['2017/12/20', 11099],
+['2017/12/21', 8311],
+['2017/12/22', 10367],
+['2017/12/23', 15320],
+['2017/12/24', 14486],
+['2017/12/25', 16977],
+['2017/12/26', 9118],
+['2017/12/27', 8023],
+['2017/12/28', 6287],
+['2017/12/29', 3911],
+['2017/12/30', 8350],
+['2017/12/31', 15757],
+['2018/1/1', 4435],
+['2018/1/2', 8391],
+['2018/1/3', 2922],
+['2018/1/4', 5562],
+['2018/1/5', 7065],
+['2018/1/6', 3805],
+['2018/1/7', 7764],
+['2018/1/8', 5240],
+['2018/1/9', 8314],
+['2018/1/10', 6829],
+['2018/1/11', 7322],
+['2018/1/12', 10181],
+['2018/1/13', 19503],
+['2018/1/14', 6604],
+['2018/1/15', 103],
+['2018/1/16', 21740],
+['2018/1/17', 13916],
+['2018/1/18', 17630],
+['2018/1/19', 10198],
+['2018/1/20', 8247],
+['2018/1/21', 6314],
+['2018/1/22', 2208],
+['2018/1/23', 2816],
+['2018/1/24', 4964],
+['2018/1/25', 9331],
+['2018/1/26', 7301],
+['2018/1/27', 5636],
+['2018/1/28', 3960],
+['2018/1/29', 2672],
+['2018/1/30', 3047],
+['2018/1/31', 3405],
+['2018/2/1', 7245],
+['2018/2/2', 7382],
+['2018/2/3', 3215],
+['2018/2/4', 1420],
+['2018/2/5', 13104],
+['2018/2/6', 2702],
+['2018/2/7', 20064],
+['2018/2/8', 9973],
+['2018/2/9', 8420],
+['2018/2/10', 2092],
+['2018/2/11', 9712],
+['2018/2/12', 776]];
+    return data;
+}
+var data = getVirtulData(2017);
+option = {
+    backgroundColor: '#404a59',
+    title: [{
+        top: 0,
+        text: '小圆的每日步数',
+        subtext: '数据来源：小圆的iPhone',
+        left: 'center',
+        textStyle: {
+            color: '#fff'
+        }
+    }],
+    tooltip: {
+        trigger: 'item',
+        formatter:'{a}<br/>{c}',
+    },
+    toolbox: {
+        show: true,
+        top:0,
+        left:0,
+        iconStyle:{
+            normal:{
+                borderColor:'',
+                    },
+        },
+        feature: {
+            dataView: {readOnly: false},
+            restore: {
+            },
+            saveAsImage: {
+                    pixelRatio:3,
+            }
+        }
+    },
+    legend: [{
+        top: 0,
+        right: 0,
+        data: ['步数','前10'],
+        textStyle: {
+            color: '#fff'
+        }
+    }],
+    visualMap: {
+        min: 12,
+        max: 21740,
+        calculable: true,
+        itemHeight: 200,
+        text: ['high', 'low'],
+        color: ['#ea3e1a', '#feb111', '#73ae73','#1193ba'],
+        //type: 'continuous',
+        orient: 'horizontal',
+        right: 'center',
+        bottom: 'bottom',
+        textStyle: {
+            color: '#ccc'
+        }
+    },
+    calendar: [{
+        top: 'center',
+        right: 'center',
+        range: ['2017-10-08', '2018-2-12'],
+        cellSize: [25, 25],
+        splitLine: {
+            show: true,
+            lineStyle: {
+                color: '#000',
+                width: 2,
+                type: 'solid'
+            }
+        },
+        monthLabel: {
+            firstDay: 1,
+            nameMap: 'cn',
+            margin:10,
+        },
+        yearLabel: {
+            show: true,
+            formatter: '2017年 - 2018年',
+            textStyle: {
+                color: '#fff'
+            }
+        },
+        itemStyle: {
+            normal: {
+                color: '#323c48',
+                borderWidth: 1,
+                borderColor: '#111'
+            }
+        }
+    }],
+    series: [{
+        name: '步数',
+        type: 'scatter',
+        coordinateSystem: 'calendar',
+        data: data,
+        symbolSize: function (val) {
+                return val[1]/1000;
+            },
+        itemStyle: {
+            normal: {
+                color: '#73b9bc'
+            }
+        }
+    }, {
+        name: '步数',
+        type: 'scatter',
+        coordinateSystem: 'calendar',
+        data: data,
+        calendarIndex: 1,
+        symbolSize: function (val) {
+                return val[1]/1000;
+            },
+        itemStyle: {
+            normal: {
+                color: '#73b9bc'
+            }
+        }
+    }, {
+        name: '前10',
+        type: 'effectScatter',
+        coordinateSystem: 'calendar',
+       
+        data: data.sort(function(a, b) {
+            return b[1] - a[1];
+        }).slice(0, 10),
+        symbolSize: function(val) {
+            return val[1]/1000;
+        },
+        showEffectOn: 'render',
+        rippleEffect: {
+            brushType: 'stroke'
+        },
+        hoverAnimation: true,
+        itemStyle: {
+            normal: {
+                color: '#ea3e1a',
+                shadowBlur: 10,
+                shadowColor: '#333'
+            }
+        },
+        zlevel: 1
+    }, {
+        name: '前10',
+        type: 'effectScatter',
+        coordinateSystem: 'calendar',
+        calendarIndex: 1,
+        data: data.sort(function(a, b) {
+            return b[1] - a[1];
+        }).slice(0, 10),
+        symbolSize: function(val) {
+            return val[1]/1000;
+        },
+        showEffectOn: 'render',
+        rippleEffect: {
+            brushType: 'stroke'
+        },
+        hoverAnimation: true,
+        itemStyle: {
+            normal: {
+                color: '#f4e925',
+                shadowBlur: 10,
+                shadowColor: '#333'
+            }
+        },
+        zlevel: 1
+    }]
+};
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+   </body>

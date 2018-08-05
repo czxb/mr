@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+   </head>
+   <body style="height: 100%; margin: 0">
+       <div id="container" style="height: 100%"></div>
+       <script type="text/javascript" src="http://www.czxa.top/jslib/ec/echarts.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+       <script type="text/javascript" src="http://www.czxa.top/jslib/ec/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="http://www.czxa.top/jslib/ec/map/js/china.js"></script>
+       <script type="text/javascript" src="http://www.czxa.top/jslib/ec/map/js/world.js"></script>
+       <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+       <script type="text/javascript" src="http://www.czxa.top/jslib/ec/extension/bmap.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+       <script type="text/javascript" src="http://data-visual.cn/datav/src/js/echarts/extension/echarts-wordcloud.min.js"></script>
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom, 'infographic');
+var app = {};
+option = null;
+option = {
+    title: {
+        text: '我的微信好友签名词云',
+        x: 'center',
+        textStyle: {
+            fontSize: 23,
+            color: 'black'
+        },
+        top: 0
+    },
+    backgroundColor: '#F7F7F7',
+    tooltip: {
+        show: true
+    },
+    toolbox: {
+        feature: {
+            saveAsImage: {
+                iconStyle: {
+                    normal: {
+                        color: '#FFFFFF'
+                    }
+                }
+            }
+        }
+    },
+    series: [{
+        name: '分词结果',
+        type: 'wordCloud',
+        //size: ['9%', '99%'],
+        sizeRange: [15, 50],
+        //textRotation: [0, 45, 90, -45],
+        rotationRange: [-45, 90],
+        //shape: 'circle',
+        textPadding: 0,
+        autoSize: {
+            enable: true,
+            minSize: 6
+        },
+        textStyle: {
+            normal: {
+                color: function() {
+                    return 'rgb(' + [
+                        Math.round(Math.random() * 160),
+                        Math.round(Math.random() * 160),
+                        Math.round(Math.random() * 160)
+                    ].join(',') + ')';
+                }
+            },
+            emphasis: {
+                shadowBlur: 10,
+                shadowColor: '#333'
+            }
+        },
+        data: []
+    }]
+};
+
+var JosnList = [];
+
+JosnList.push(
+{name: "一个", value: 2},
+{name: "一厢情愿", value: 1},
+{name: "一只", value: 1},
+{name: "一寸", value: 1},
+{name: "一步一脚印", value: 1},
+{name: "一沙", value: 1},
+{name: "不", value: 2},
+{name: "不乱", value: 1},
+{name: "不务正业", value: 1},
+{name: "不忘", value: 1},
+{name: "不过", value: 1},
+{name: "严", value: 1},
+{name: "为", value: 1},
+{name: "习惯", value: 1},
+{name: "云和", value: 1},
+{name: "人", value: 4},
+{name: "人生", value: 6},
+{name: "仁德", value: 1},
+{name: "代查", value: 1},
+{name: "以", value: 2},
+{name: "何以", value: 1},
+{name: "余生", value: 1},
+{name: "佛", value: 1},
+{name: "你", value: 1},
+{name: "你在", value: 1},
+{name: "倔强", value: 1},
+{name: "做", value: 1},
+{name: "做人", value: 1},
+{name: "像", value: 2},
+{name: "先", value: 1},
+{name: "其实", value: 1},
+{name: "凡事", value: 1},
+{name: "凡人", value: 1},
+{name: "初", value: 1},
+{name: "别", value: 1},
+{name: "别人", value: 1},
+{name: "前途", value: 1},
+{name: "努力", value: 1},
+{name: "勇气", value: 1},
+{name: "勿", value: 1},
+{name: "勿忘", value: 1},
+{name: "十一", value: 1},
+{name: "博", value: 1},
+{name: "原来", value: 1},
+{name: "取", value: 1},
+{name: "古今", value: 1},
+{name: "只有", value: 1},
+{name: "向来", value: 1},
+{name: "呵呵", value: 1},
+{name: "命运", value: 1},
+{name: "哎哟", value: 1},
+{name: "哥", value: 1},
+{name: "哦", value: 1},
+{name: "啦", value: 1},
+{name: "嗷", value: 1},
+{name: "嘿", value: 2},
+{name: "坚信", value: 2},
+{name: "坚持", value: 1},
+{name: "大", value: 1},
+{name: "天", value: 1},
+{name: "失学", value: 1},
+{name: "头", value: 1},
+{name: "如何是好", value: 1},
+{name: "宁", value: 1},
+{name: "家有", value: 1},
+{name: "少壮不努力", value: 1},
+{name: "尔", value: 1},
+{name: "就算", value: 1},
+{name: "尽", value: 2},
+{name: "层", value: 1},
+{name: "屠", value: 1},
+{name: "己", value: 1},
+{name: "常", value: 1},
+{name: "年轻", value: 2},
+{name: "幸而", value: 1},
+{name: "得到", value: 1},
+{name: "心", value: 3},
+{name: "忙", value: 1},
+{name: "念念不忘", value: 1},
+{name: "情事", value: 1},
+{name: "愚公移山", value: 1},
+{name: "感恩", value: 1},
+{name: "愿", value: 2},
+{name: "慎", value: 1},
+{name: "懒", value: 1},
+{name: "成都", value: 1},
+{name: "我", value: 3},
+{name: "我的", value: 1},
+{name: "我要", value: 1},
+{name: "我还", value: 1},
+{name: "所", value: 1},
+{name: "把", value: 1},
+{name: "放弃", value: 1},
+{name: "数学", value: 1},
+{name: "新", value: 1},
+{name: "无", value: 1},
+{name: "时间", value: 1},
+{name: "明天", value: 1},
+{name: "是", value: 1},
+{name: "最", value: 1},
+{name: "有", value: 1},
+{name: "有始无终", value: 1},
+{name: "杂食", value: 1},
+{name: "欢迎", value: 1},
+{name: "欣赏", value: 1},
+{name: "此", value: 1},
+{name: "此生", value: 1},
+{name: "每", value: 1},
+{name: "求", value: 1},
+{name: "沧海", value: 1},
+{name: "洋葱", value: 1},
+{name: "温柔", value: 1},
+{name: "独立", value: 1},
+{name: "珍惜", value: 1},
+{name: "生", value: 1},
+{name: "生命", value: 2},
+{name: "用", value: 1},
+{name: "目標", value: 1},
+{name: "相知", value: 1},
+{name: "相遇", value: 1},
+{name: "真正", value: 1},
+{name: "眼不见为净", value: 1},
+{name: "睡觉", value: 1},
+{name: "程", value: 1},
+{name: "稳", value: 1},
+{name: "空白", value: 1},
+{name: "简单", value: 2},
+{name: "纯净", value: 1},
+{name: "置之死地", value: 1},
+{name: "自信", value: 1},
+{name: "自律", value: 1},
+{name: "苏", value: 1},
+{name: "莫道", value: 1},
+{name: "蓓蕾", value: 1},
+{name: "行", value: 1},
+{name: "要", value: 2},
+{name: "认识", value: 1},
+{name: "记住", value: 1},
+{name: "读书", value: 1},
+{name: "谁", value: 1},
+{name: "贵在", value: 1},
+{name: "起", value: 1},
+{name: "越", value: 1},
+{name: "这", value: 1},
+{name: "这个", value: 1},
+{name: "道", value: 1},
+{name: "遗世独立", value: 1},
+{name: "那", value: 1},
+{name: "醒", value: 1},
+{name: "醒着", value: 1},
+{name: "错过", value: 1},
+{name: "长相", value: 1},
+{name: "间接", value: 1},
+{name: "陌", value: 1},
+{name: "顺其自然", value: 1},
+{name: "风", value: 2},
+{name: "风筝", value: 1},
+{name: "黑色", value: 1},
+{name: "點", value: 1});
+option.series[0].data = JosnList;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+   </body>
+</html>
