@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+   </head>
+   <body style="height: 100%; margin: 0">
+       <div id="container" style="height: 100%"></div>
+       <script type="text/javascript" src="http://www.czxa.top/jslib/ec/echarts.min.js"></script>
+       <script type="text/javascript" src="http://www.czxa.top/jslib/ec/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="http://www.czxa.top/jslib/ec/ecStat.min.js"></script>
+       <script type="text/javascript" src="http://www.czxa.top/jslib/ec/dataTool.min.js"></script>
+       <script type="text/javascript" src="http://www.czxa.top/jslib/ec/china.js"></script>
+       <script type="text/javascript" src="http://www.czxa.top/jslib/ec/world.js"></script>
+       <script type="text/javascript" src="http://www.czxa.top/jslib/ec/api.js"></script>
+       <script type="text/javascript" src="http://www.czxa.top/jslib/ec/bmap.min.js"></script>
+       <script type="text/javascript" src="http://www.czxa.top/jslib/ec/simplex.js"></script>
+       <script type="text/javascript" src="http://www.czxa.top/jslib/ec/dark.js"></script>
+       <script type="text/javascript" src="http://www.czxa.top/jslib/ec/vintage.js"></script>
+       <script type="text/javascript" src="http://www.czxa.top/jslib/ec/macarons.js"></script>
+       <script type="text/javascript" src="http://www.czxa.top/jslib/ec/infographic.js"></script>
+       <script type="text/javascript" src="http://www.czxa.top/jslib/ec/shine.js"></script>
+       <script type="text/javascript" src="http://www.czxa.top/jslib/ec/roma.js"></script>
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+// 主题选择：vintage/dark/macarons/infographic/shine/roma
+var myChart = echarts.init(dom, 'dark');
+var app = {};
+option = null;    
+var appusage_data = [
+{
+  name: '美元指数',
+  value: 0.56
+},{
+  name: '美元兑日元',
+  value: 0.18
+},{
+  name: '欧元兑美元',
+  value: -0.76
+},{
+  name: '英镑兑美元',
+  value: -0.79
+},{
+  name: '澳元兑美元',
+  value: -0.05
+}];
+option = {
+    "title": {
+        "text": "主要汇率周环比变化\n2018年8月6日",
+        "textStyle": {
+            "color": "#bcbfff",
+            "fontWeight": "bold",
+            "fontSize": 18
+        },
+        "top": "4%",
+        "left": "2.2%"
+    },
+    "tooltip": {
+        "trigger": "axis",
+        "axisPointer": { // 坐标轴指示器，坐标轴触发有效
+            "type": "shadow" // 默认为直线，可选为："line" | "shadow"
+        }
+    },
+    "grid": {
+        "left": "3%",
+        "right": "10%",
+        "bottom": "3%",
+        "containLabel": true
+    },
+    "yAxis": [{
+        "type": "category",
+        "data": ["0.56", "0.18", "-0.76", "-0.79", "-0.05"],
+        "axisLine": {
+            "show": false
+        },
+        "axisTick": {
+            "show": false,
+            "alignWithLabel": true
+        },
+        "axisLabel": {
+            "textStyle": {
+                "color": "#ffb069"
+            }
+        }
+    }],
+    "xAxis": [{
+        "type": "value",
+        "axisLine": {
+            "show": false
+        },
+        "axisTick": {
+            "show": false
+        },
+        "axisLabel": {
+            "show": false
+        },
+        "splitLine": {
+            "show": false
+        }
+    }],
+
+    "series": [{
+        "name": "上周汇率变化",
+        "type": "bar",
+        "data": appusage_data,
+        "barCategoryGap": "35%",
+        "label": {
+            "normal": {
+                "show": true,
+                "position": "right",
+                "formatter": function(params) {
+                    return params.data.name;
+                },
+                "textStyle": {
+                    "color": "#bcbfff"
+                }
+            }
+        },
+        "itemStyle": {
+            "normal": {
+                "color": new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
+                    "offset": 0,
+                    "color": "#1890ff" // 0% 处的颜色
+                }, {
+                    "offset": 1,
+                    "color": "#66B5FF" // 100% 处的颜色
+                }], false)
+            }
+        }
+    }]
+};
+        myChart.setOption(option); 
+    </script>
+</body>
