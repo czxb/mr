@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script type="text/javascript" src="http://www.czxa.top/jslib/hc/dummy.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://www.czxa.top/jslib/hc/result-light.css">
+  <style type="text/css">
+    #container {
+  min-width: 420px;
+  max-width: 650px;
+  margin: 0 auto;
+}
+  </style>
+</head>
+<body>
+<script src="http://www.czxa.top/jslib/hc/highcharts.js"></script>
+<script src="http://www.czxa.top/jslib/hc/heatmap.js"></script>
+<script src="http://www.czxa.top/jslib/hc/tilemap.js"></script>
+<script src="http://www.czxa.top/jslib/hc/exporting.js"></script>
+<div id="container"></div>
+<script type='text/javascript'>
+Highcharts.chart('container', {
+    chart: {
+        type: 'tilemap',
+        inverted: true,
+        height: '80%'
+    },
+    title: {
+        text: '我的好友的地域分布'
+    },
+    subtitle: {
+        text: '刘含笑'
+    },
+    xAxis: {
+        visible: false
+    },
+    yAxis: {
+        visible: false
+    },
+    colorAxis: {
+        dataClasses: [{
+            from: 0,
+            to: 10,
+            color: '#F9EDB3',
+            name: '< 10'
+        }, {
+            from: 10,
+            to: 100,
+            color: '#FFC428',
+            name: '10~100'
+        }, {
+            from: 100,
+            to: 300,
+            color: '#FF7987',
+            name: '100~300'
+        }, {
+            from: 300,
+            color: '#FF2371',
+            name: '> 300'
+        }]
+    },
+    tooltip: {
+        pointFormat: '<b>{point.name}</b>的好友数量为{point.value}</b>'
+    },
+    plotOptions: {
+        series: {
+            dataLabels: {
+                enabled: true,
+                format: '{point.hc-a2}',
+                color: '#000000',
+                style: {
+                    textOutline: false
+                }
+            }
+        }
+    },
+    series: [{
+        name: '',
+        data: [
+{'hc-a2': '上海',name: '上海',x: 3,y: 30,value: 10},
+{'hc-a2': '云南',name: '云南',x: 4,y: 25,value: 3},
+{'hc-a2': '内蒙古',name: '内蒙古',x: -1,y: 28,value: 4},
+{'hc-a2': '北京',name: '北京',x: 0,y: 30,value: 22},
+{'hc-a2': '台湾',name: '台湾',x: 6,y: 30,value: 6},
+{'hc-a2': '吉林',name: '吉林',x: -1.899999976158142,y: 31.70000076293945,value: 7},
+{'hc-a2': '四川',name: '四川',x: 3,y: 25,value: 8},
+{'hc-a2': '天津',name: '天津',x: 1,y: 31,value: 4},
+{'hc-a2': '安徽',name: '安徽',x: 3,y: 29,value: 138},
+{'hc-a2': '山东',name: '山东',x: 1,y: 30,value: 7},
+{'hc-a2': '山西',name: '山西',x: 1,y: 29,value: 4},
+{'hc-a2': '广东',name: '广东',x: 5,y: 28,value: 461},
+{'hc-a2': '广西',name: '广西',x: 5,y: 27,value: 1},
+{'hc-a2': '新疆',name: '新疆',x: -1,y: 24,value: 3},
+{'hc-a2': '江苏',name: '江苏',x: 2,y: 29,value: 12},
+{'hc-a2': '江西',name: '江西',x: 4,y: 28,value: 1},
+{'hc-a2': '河北',name: '河北',x: 0,y: 29,value: 7},
+{'hc-a2': '河南',name: '河南',x: 2,y: 28,value: 5},
+{'hc-a2': '浙江',name: '浙江',x: 4,y: 29,value: 13},
+{'hc-a2': '海南',name: '海南',x: 7,y: 27,value: 2},
+{'hc-a2': '湖北',name: '湖北',x: 3,y: 28,value: 15},
+{'hc-a2': '湖南',name: '湖南',x: 4,y: 27,value: 4},
+{'hc-a2': '澳门',name: '澳门',x: 6,y: 27,value: 4},
+{'hc-a2': '福建',name: '福建',x: 5,y: 29,value: 12},
+{'hc-a2': '西藏',name: '西藏',x: 3,y: 24,value: 2},
+{'hc-a2': '贵州',name: '贵州',x: 4,y: 26,value: 4},
+{'hc-a2': '辽宁',name: '辽宁',x: -1,y: 31,value: 4},
+{'hc-a2': '重庆',name: '重庆',x: 3,y: 26,value: 11},
+{'hc-a2': '陕西',name: '陕西',x: 2,y: 27,value: 3},
+{'hc-a2': '青海',name: '青海',x: 2,y: 24,value: 1},
+{'hc-a2': '香港',name: '香港',x: 6,y: 28,value: 26},
+{'hc-a2': '黑龙江',name: '黑龙江',x: -3,y: 31.5,value: 5},
+        ]
+    }]
+});
+</script>
+  <script>
+  if (window.parent && window.parent.parent){
+    window.parent.parent.postMessage(["resultsFrame", {
+      height: document.body.getBoundingClientRect().height,
+      slug: "None"
+    }], "*")
+  }
+</script>
+</body>
+</html>
